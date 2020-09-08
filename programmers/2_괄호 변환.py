@@ -2,6 +2,7 @@
 # 문제에 주어진 문자열 변환과정을 만들었다
 # 그 과정에서 필요한 함수들, 균형잡힌 문자열로 분리하는 divide 함수와
 # 균형잡힌 문자열인지 아닌지 확인하는 checkRight 함수를 만들었다
+# 저 두가지 함수를 어떻게 만들어야 할지 고민했는데
 
 def solution(p):
 
@@ -50,7 +51,6 @@ def solution(p):
             temp = temp+makeRight(v)
             temp += ')'
         
-            # u = u[1:-1]
             u = [char for char in u[1:-1]]  
             for i in u:
                 temp += '(' if i == ')' else ')'
@@ -60,3 +60,21 @@ def solution(p):
     answer = makeRight(p)
     
     return answer
+
+# 다른 사람 코드 보기 1
+def solution(p):
+    if p == '': return p
+    r = True # i번째 문자열까지 균형잡힌 문자열인지 아닌지를 저장
+    c = 0 # (와 )의 개수가 같은지 확인하기 위한 변수
+    for i in range(len(p)):
+        if p[i] == '(':
+            c -= 1
+        else:
+            c += 1
+        if c > 0:
+            r = False
+        if c == 0:
+            if r:
+                return p[:i+1]+solution(p[i+1:])
+            else:
+                return '('+solution(p[i+1:])+')'+''.join(list(map(lambda x:'(' if x==')' else ')'), p[1:i]))
