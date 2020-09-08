@@ -35,3 +35,26 @@ def solution(record):
         i()
     
     return answer
+
+
+# 다른 사람 풀이 1
+# record를 두 번 순회한다
+# 첫번째 for문에서는 namespace 딕셔너리에 id와 별명을 저장한다
+# 첫번째 for문이 끝나면 닉네임 변경이 모두 끝난 상태로 namespace에 id와 별명이 저장되어 있다
+# 두번째 for문에서는 enter와 leave인 경우 출력하는 로그를 answer에 저장한다
+def solution(record):
+    answer = []
+    namespace = {}
+    printer = {
+        'Enter':'님이 들어왔습니다',
+        'Leave':'님이 나갔습니다'
+    }
+
+    for i in record:
+        rr = r.split(' ')
+        if rr[0] in ['Enter','Change']:
+            namespace[rr[1]] = rr[2]
+
+    for i in record:
+        if r.split(' ')[0] != 'Change':
+            answer.append(namespace[r.split(' ')[1]] + printer[r.split(' ')[0]])
