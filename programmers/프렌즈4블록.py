@@ -4,29 +4,24 @@ def solution(m, n, board):
     willBeDeleted = set()
     
     def browse():
+        # 좌표 i : m-2부터 0 까지, j : 0부터 n-1까지 탐색
+        # 빈칸 채우기
         for i in range(m-2,-1,-1):
             for j in range(n-1):
-                # 좌표 i : m-2부터 0 까지, j : 0부터 n-1까지 탐색
-                
-                adjacentFourBlocksValue = [] # i,j 포함 인접4블록 값 저장할 배열
-                
-                # i,j 의 인접4블록 탐색
-                for (x,y) in [(i,j),(i+1,j),(i,j+1),(i+1, j+1)]:
+                if board[i][j] != '0': continue
                     
-                    #인접블록 중 값이 '0'인 경우(빈 공간인 경우) - 블록을 내림
-                    if board[x][y] == '0':
-                        notEmptyIndex = -1
-                        for k in range(x-1,-1,-1):
-                            if board[k][y] == '0': continue
-                            notEmptyIndex = k
-                            break
-                        if notEmptyIndex != -1:
-                            board[x][y], board[notEmptyIndex][y] = board[notEmptyIndex][y],board[x][y]
-                    
-                    # 인접블록의 값을 배열에 저장(
-                    adjacentFourBlocksValue.append(board[x][y])
-                
-                if adjacentFourBlocksValue[0] != '0' and adjacentFourBlocksValue.count(adjacentFourBlocksValue[0]) == len(adjacentFourBlocksValue):
+                notEmptyIndex = -1
+                for k in range(i-1,-1,-1):
+                    if board[k][j] == '0': continue
+                    notEmptyIndex = k
+                    break
+                if notEmptyIndex != -1:
+                    board[i][j], board[notEmptyIndex][j] = board[notEmptyIndex][j],board[i][j]
+
+        # 인접블록 확인
+        for i in range(m-2,-1,-1):
+            for j in range(n-1):
+                if board[i][j] == board[i+1][j] == board[i][j+1] == board[i+1][j+1] != '0':
                     for (x,y) in [(i,j),(i+1,j),(i,j+1),(i+1, j+1)]:
                         willBeDeleted.add((x,y))
                         
