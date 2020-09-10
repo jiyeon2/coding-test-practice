@@ -23,4 +23,13 @@ def solution(n):
             start += 1
             
         
-    return answer+1
+    return answer+1 #start == end == n인 경우 한가지를 포함시킨다
+
+
+# 다른사람 풀이
+# n이 3개의 연속된 자연수의 합 i-1, i, i+1으로 표현된다고 하면
+# n = 3i, 즉 n은 3의 배수이다.
+# n이 5개의 연속된 자연수의 합으로 표현된다면, n은 5의 배수이다
+# 따라서 n의 약수 중 홀수가 몇개있냐는 문제와 같은 문제로 해석할 수 있다...?????
+def expression(num):
+    return len([i for i in range(1,num+1,2) if num%i is 0])
