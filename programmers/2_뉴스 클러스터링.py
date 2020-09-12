@@ -51,3 +51,39 @@ def getUnion(a,b,intersection):
         if c in union:
             union.remove(c)
     return union
+
+
+# [두 배열의 교집합 데이터 구하기](https://eminentstar.github.io/2017/06/24/two-array-intersection.html)
+
+# 다른사람 풀이1
+def def solution(input):
+    str1 = [str1[i:i+2].lower() for i in range(len(str1)-1) if str1[i:i+2].isalpha()]
+    str2 = [str2[i:i+2].lower() for i in range(len(str2)-1) if str2[i:i+2].isalpha()]
+    
+    gyo = set(str1) & set(str2) # str1.intersection(str2) 와 같다
+    hap = set(str1) | set(str2) # str2.union(b)와 같다
+
+    if len(hap) == 0:
+        return 65536
+
+    # 교집합 요소에 대해 원래 배열에서 개수를 카운트함(set은 중복요소 포함이 안되므로)
+    gyo_sum = sum([min(str1.count(gg), str2.count(gg)) for gg in gyo])
+    hap_sum = sum([max(str1.count(hh), str2.count(hh2)) for hh in hap])
+
+    return math.floor((gyo_sum/hap_sum)*65536)
+
+# 다른사람 풀이2
+from collections import Counter
+def solution(str1, str2):
+    s1 = [str1[i:i+2].lower() for i in range(len(str1)-1) if str1[i:i+2].isalpha()]
+    s2 = [str2[i:i+2].lower() for i in range(len(str2)-1) if str2[i:i+2].isalpha()]
+    if not s1 and not s2:
+        return 65536
+    
+    c1 = Counter(s1) #Counter({'ha': 2, 'an': 1, 'nd': 1, 'ds': 1, 'sh': 1, 'ak': 1, 'ke': 1}) 
+    c2 = Counter(s2) #Counter({'ha': 2, 'sh': 1, 'ak': 1, 'ke': 1, 'an': 1, 'nd': 1, 'ds': 1})
+	
+    intersectionCount = sum((c1&c2).values())
+    unionCount = sum((c1|c2).values())
+    answer = int(intersectionCount / unionCount*65536)
+    return answer
