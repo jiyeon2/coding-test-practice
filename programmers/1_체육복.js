@@ -4,6 +4,8 @@
 // 뒷번호 학생이 여분이 2개인 경우 1개 빌리고 answer += 1 하고 continue,
 // 체육복이 1개 이상인 경우는 그냥 answer += 1
 
+// for 루프 안에서 includes쓰니까 O(n^2)
+
 function solution(n, lost, reserve) {
   var answer = 0;
   let arr = []; // 학생이 가진 체육복 저장하는 배열
