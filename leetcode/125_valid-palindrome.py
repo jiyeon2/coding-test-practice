@@ -26,3 +26,48 @@ class Solution:
         
         return True
         
+
+# 풀이1 - 리스트로 변환
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        # 주어진 문자열을 영문자와 숫자만 포함하는 배열로 변환하기
+        strs = []
+        for char in s:
+            if char.isalnum(): #only returns true if a string contains alphanumeric characters
+                strs.append(char.lower())
+        
+        while len(strs) > 1:
+            # strs의 맨 앞과 맨 뒤 값을 빼내면서 비교
+            # 이렇게 하면 뒤집은 배열을 따로 만들 필요가 없다
+            if strs.pop(0) != strs.pop(): 
+                return False
+        
+        return True
+
+# 풀이2 - 데크로 최적화
+import collections
+
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        # list 대신 deque 사용
+        strs: Deque = collections.deque()
+
+        for char in s:
+            if char.isalnum():
+                strs.append(char.lower())
+        
+        while len(strs) > 1 :
+            # list.pop(0) 은 O(n)이지만, deque.popleft()는 O(1)!
+            if strs.popleft() != strs.pop():
+                return False
+        return True
+
+# 풀이3 - 슬라이싱
+class Solution:
+    def isPalindrome(self, s:str) -> bool:
+        s = s.lower()
+        s = re.sub('[^a-z0-9]', '' ,s) # 정규표현식..?
+
+        return s == s[::-1]
+        # 대부분의 문자열작업은 슬라이싱으로 처리하는 편이 빠르다
+        # 리스트로 매핑하는 방법도 좋지만 그만큼 연산비용이 필요하다(속도 느림)
