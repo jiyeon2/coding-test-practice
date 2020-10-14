@@ -28,5 +28,12 @@ const graph = {
   7: [3],
 };
 
-let result = dfs_iterative(graph, 1);
+const graph2 = {
+  0: [1, 2],
+  1: [0, 2],
+  2: [0, 1, 3],
+  3: [2],
+};
+
+let result = dfs_iterative(graph2, 0);
 console.log(result);

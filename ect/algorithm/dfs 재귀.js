@@ -26,5 +26,12 @@ const graph = {
   7: [3],
 };
 
-const result = dfs_recursive(graph, 1, []);
+const graph2 = {
+  0: [1, 2],
+  1: [0, 2],
+  2: [0, 1, 3],
+  3: [2],
+};
+
+const result = dfs_recursive(graph2, 0, []);
 console.log(result);
