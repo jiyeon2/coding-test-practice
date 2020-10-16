@@ -12,29 +12,42 @@ function isConvertable(from, to) {
 }
 function solution(begin, target, words) {
   if (!words.includes(target)) return 0;
-  var answer = 0;
-  let used = Object.fromEntries(words.map((word) => [word, 0]));
-  let q = [];
-  words.forEach((word) => {
-    if (isConvertable(begin, word)) {
-      q.push(word);
-      used[word] = 1;
-    }
-  });
 
-  while (q.length) {
-    let current = q.shift();
-    for (let i = 0; i < words.length; i++) {
-      let next = words[i];
-      if (isConvertable(current, next) && !used[next]) {
-        if (next === target) {
-          return used[current] + 1;
+  var answer = 0;
+  let level = 0;
+  let q = [begin];
+
+  while (words.length) {
+    let nextAvailable = [];
+    for (let i = 0; i < q.length; i++) {
+      let currentWord = q[i];
+      let filtered = words.filter((otherWord, index, arr) => {
+        if (isConvertable(currentWord, otherWord)) {
+          arr.splice(index, 1); // words 배열에서 삭제
+          return true;
         }
-        q.push(next);
-        used[next] = used[current] + 1;
-      }
+        return false;
+      });
+      nextAvailable = nextAvailable.concat(filtered);
+    }
+    level += 1;
+    if (nextAvailable.includes(target)) {
+      return level;
+    } else {
+      q = nextAvailable;
     }
   }
 
   return answer;
 }
+
+const result = solution("hot", "lot", ["hot", "dot", "dog", "lot", "log"]);
+// const result = solution("hit", "cog", [
+//   "hot",
+//   "dot",
+//   "dog",
+//   "lot",
+//   "log",
+//   "cog",
+// ]);
+console.log(result);
